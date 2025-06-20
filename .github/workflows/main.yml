@@ -10,41 +10,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout Repo
-        uses: actions/checkout@v3
+    - name: 🔄 Checkout Repo
+      uses: actions/checkout@v3
 
-      - name: 🧠 Install Dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y pandoc zip tectonic
+    - name: 🧱 Install Dependencies
+      run: |
+        sudo apt update
+        sudo apt install pandoc zip -y
 
-      - name: 📝 Generate PDF from README
-        run: |
-          ls -lah
-          pandoc README.md --from markdown --pdf-engine=tectonic -o BARP_Specification.pdf
-          pandoc README.md --from markdown -o BARP_Specification.md
+    - name: 📝 Generate PDF from README.md
+      run: |
+        pandoc README.md -o BARP_Specification.pdf
 
-      - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
-        run: |
-          zip -r BARP_Protocol_Bundle.zip . -x "*.git*" "*.zip*" "*.pdf*"
+    - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
+      run: |
+        zip -r BARP_Protocol_Bundle.zip . -x ".git/*" -x "*.zip" -x "*.pdf"
 
-      - name: 🧬 Hash Commit + Attribution Log
-        run: |
-          HASH=$(git log -1 --pretty=format:"%H")
-          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          echo "[${DATE}] Commit Hash: $HASH | Author: Brittany Wright" > output-attribution.txt
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output-attribution.txt
-          git commit -m "🧬 Update Attribution Log"
-          git push
+    - name: 🧬 Hash Commit + Attribution Log
+      run: |
+        HASH=$(git log -1 --pretty=format:"%H")
+        DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+        echo "[$DATE] Commit Hash: $HASH | Author: Brittany Wright | BARP Protocol Update" >> output-attribution.txt
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add output-attribution.txt
+        git commit -m "🔐 Update Attribution Log"
+        git push
 
-      - name: 🚀 Publish Release (optional)
-        if: false
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            BARP_Specification.pdf
-            BARP_Protocol_Bundle.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # Optional: Enable to auto-release
+    - name: 🚀 Publish Release (toggle if needed)
+      if: false  # Set to true if you want automatic GitHub Releases
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          BARP_Specification.pdf
+          BARP_Protocol_Bundle.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
