@@ -30,7 +30,7 @@ jobs:
         run: |
           zip -r BARP_Protocol_Bundle.zip . -x "*.git*" -x "*.zip" -x "*.pdf"
 
-      - - name: 🧠 Hash Commit + Attribution Log
+      -  name: 🧠 Hash Commit + Attribution Log
   run: |
     set -e
     HASH=$(git log -1 --pretty=format:"%H")
