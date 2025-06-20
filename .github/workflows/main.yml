@@ -16,7 +16,7 @@ jobs:
       - name: 🧠 Install Dependencies
         run: |
           sudo apt update
-          sudo apt install -y pandoc zip texlive-latex-base
+                    sudo apt install -y pandoc zip texlive-latex-base
 
       - name: 📝 Generate PDF from README
         run: |
