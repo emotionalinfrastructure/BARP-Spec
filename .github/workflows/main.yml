@@ -24,7 +24,7 @@ jobs:
       - name: 📄 Generate PDF from README
         run: |
           set -e
-          pandoc README.md -o BARP_Specification.pdf
+          pandoc README.md -o BARP_Specification.pdf--pdf-engine=tectonic
 
       - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
         run: |
