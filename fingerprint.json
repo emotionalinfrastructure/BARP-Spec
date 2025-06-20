@@ -1,0 +1,22 @@
+{
+    "author_id": "0001",
+    "author_name": "Brittany Wright",
+    "signal_hash": "b8a6e44e17f99149b0eac3329f70ae93",
+    "formatting_features": {
+        "line_break_pattern": "short-staggered (\u2264 60 chars, double line space every 2-3 lines)",
+        "recursion_loops": true,
+        "em_dash_frequency": "high",
+        "emotional_register": "trauma-informed, reflective, identity-layered",
+        "syntax_tags": [
+            "emotional recursion",
+            "identity framing",
+            "mirrored cadence",
+            "structural rhythm"
+        ]
+    },
+    "consent_status": "active",
+    "registration_date": "2025-06-19",
+    "removal_rights": true,
+    "license_tier": "Commercial (30% infrastructure royalty)",
+    "license_reference": "BSSLF-v1.0"
+}
