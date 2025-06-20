@@ -15,12 +15,12 @@ jobs:
 
     - name: 🧱 Install Dependencies
       run: |
+            - name: 📄 Generate PDF from README
+      run: |
         sudo apt update
-        sudo apt install pandoc zip -
-      exit 1
-    }- name: 📄 Generate PDF from README
-  run: |
-    sudo apt update
+        sudo apt install pandoc -y
+        ls -lah
+        pandoc README.md -o BARP_Specification.pdf
     sudo apt install pandoc -y
     ls -lah
     pandoc README.md -o BARP_Specification.pdf
