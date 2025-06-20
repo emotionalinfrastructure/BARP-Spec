@@ -3,8 +3,6 @@ name: BARP Deployment + Attribution Logger
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -12,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🛎️ Checkout Repo
-        uses: actions/checkout@v4
+      - name: 🔍 Checkout Repo
+        uses: actions/checkout@v3
 
-      - name: 🧠 Install Dependencies
+      - name: 🌐 Install Dependencies
         run: |
           set -e
           sudo apt update
@@ -26,40 +24,28 @@ jobs:
       - name: 📄 Generate PDF from README
         run: |
           set -e
-          ls -lah
-          pandoc README.md --from markdown --pdf-engine=tectonic -o BARP_Specification.pdf
+          pandoc README.md -o BARP_Specification.pdf
 
       - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
         run: |
-          set -e
-          zip -r BARP_Protocol_Bundle.zip . -x "*.git*" "*.zip*" "*.pdf*"
+          zip -r BARP_Protocol_Bundle.zip . -x "*.git*" -x "*.zip" -x "*.pdf"
 
-      - name: 🔒 Hash Commit + Attribution Log
+      - name: 🧠 Hash Commit + Attribution Log
         run: |
           set -e
           HASH=$(git log -1 --pretty=format:"%H")
-          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          echo "[${DATE}] Commit Hash: ${HASH} | Author: Brittany Wright" > output-attribution.txt
+          DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          echo "${DATE} Commit Hash: ${HASH} | Author: Brittany Wright | BARP Protocol Update" > output-attribution.txt
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output-attribution.txt || echo "No changes to commit."
-          git commit -m "📝 Update Attribution Log" || echo "Nothing new to commit."
-          git push || echo "Push failed or unnecessary."
+          git add output-attribution.txt
+          git commit -m "🧾 Update Attribution Log"
+          git push
 
-      - name: 📤 Upload Artifacts
+      - name: ☁️ Upload PDF + ZIP Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: BARP-Artifacts
+          name: barp-protocol-artifacts
           path: |
             BARP_Specification.pdf
             BARP_Protocol_Bundle.zip
-
-      - name: 🚀 Publish Release (optional)
-        if: false  # Set to true if you want to enable GitHub Releases
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            BARP_Specification.pdf
-            BARP_Protocol_Bundle.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
