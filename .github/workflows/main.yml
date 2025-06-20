@@ -16,12 +16,12 @@ jobs:
       - name: 🧠 Install Dependencies
         run: |
           sudo apt update
-          sudo apt install -y pandoc zip
+          sudo apt install -y pandoc zip texlive-latex-base
 
       - name: 📝 Generate PDF from README
         run: |
           ls -lah
-          test -f README.md || { echo "README.md not found"; exit 1; }
+          pandoc README.md --from markdown --pdf-engine=pdflatex -o BARP_Specification.pdf
           pandoc README.md --from markdown -o BARP_Specification.pdf
 
       - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
