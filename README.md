@@ -64,4 +64,19 @@ More in `/license/BSSLF-v1.0.pdf`
 ## 📩 Contact
 
 For licensing or contribution:
-**brittanywright@emotionalinfrastructure.org**
+**brittanywright@emotionalinfrastructure.---
+
+### © 2025 Brittany Wright  
+**Emotional Infrastructure Architect™**  
+This repository contains the officially registered BARP Protocol, BSSLF License, and behavioral signal structures authored and protected under U.S. Copyright.
+
+**Case #:** 1-14936324021  
+**Date Filed:** June 20, 2025  
+**Legal Title:** *Emotional Infrastructure Architect: System Claim — Declaration and 9 Other Unpublished Works*
+
+📜 [Full Authorship Statement →](https://emotionalinfrastructure.org)  
+📩 For licensing or attribution: brittanywright@emotionalinfrastructure.org
+
+---
+
+
