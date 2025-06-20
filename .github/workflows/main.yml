@@ -18,10 +18,26 @@ jobs:
         sudo apt update
         sudo apt install pandoc zip -y
 
-    - name: 📝 Generate PDF from README.md
-      run: |
-        pandoc README.md -o BARP_Specification.pdf
+    -- name: 🐛 Safe PDF Generation
+  run: |
+    echo "📍 Verifying pandoc install..."
+    if ! command -v pandoc &> /dev/null; then
+      echo "❌ Pandoc not found!"
+      exit 1
+    fi
 
+    echo "📂 Checking README.md..."
+    if [ ! -f README.md ]; then
+      echo "❌ README.md not found!"
+      ls -la
+      exit 1
+    fi
+
+    echo "🧾 Generating PDF..."
+    pandoc README.md -o BARP_Specification.pdf || {
+      echo "❌ Pandoc failed to render PDF."
+      exit 1
+    }
     - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
       run: |
         zip -r BARP_Protocol_Bundle.zip . -x ".git/*" -x "*.zip" -x "*.pdf"
