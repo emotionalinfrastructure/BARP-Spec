@@ -18,10 +18,10 @@ jobs:
         sudo apt update
         sudo apt install pandoc zip -y
 
-    -- name: 🐛 Safe PDF Generation
+    -- name: - name: 🐛 Safe PDF Generation
   run: |
     echo "📍 Verifying pandoc install..."
-    if ! command -v pandoc &> /dev/null; then
+    if [ "$(command -v pandoc)" = "" ]; then
       echo "❌ Pandoc not found!"
       exit 1
     fi
@@ -36,6 +36,8 @@ jobs:
     echo "🧾 Generating PDF..."
     pandoc README.md -o BARP_Specification.pdf || {
       echo "❌ Pandoc failed to render PDF."
+      exit 1
+    }
       exit 1
     }
     - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
