@@ -3,6 +3,8 @@ name: BARP Deployment + Attribution Logger
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -11,7 +13,7 @@ jobs:
 
     steps:
       - name: 🛎️ Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🧠 Install Dependencies
         run: |
@@ -45,7 +47,7 @@ jobs:
           git push || echo "Push failed or unnecessary."
 
       - name: 📤 Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: BARP-Artifacts
           path: |
