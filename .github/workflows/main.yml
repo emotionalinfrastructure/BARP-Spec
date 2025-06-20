@@ -10,6 +10,54 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 📥 Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: 🧠 Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install pandoc zip -y
+
+      - name: 📝 Generate PDF from README
+        run: |
+          ls -lah
+          test -f README.md || { echo "README.md not found"; exit 1; }
+          pandoc README.md --from markdown -o BARP_Specification.pdf
+
+      - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
+        run: |
+          zip -r BARP_Protocol_Bundle.zip . -x "*.git*" -x "*.zip"
+
+      - name: 🧾 Hash Commit + Attribution Log
+        run: |
+          HASH=$(git log -1 --pretty=format:"%H")
+          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "[$DATE] Commit Hash: $HASH | Author: Brittany Wright | BARP Attribution Log" > output-attribution.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output-attribution.txt
+          git commit -m "🧾 Update Attribution Log"
+          git push
+
+      - name: 🚀 Publish Release (optional)
+        if: false # Change to true to enable auto-release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            BARP_Specification.pdf
+            BARP_Protocol_Bundle.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
     - name: 🔄 Checkout Repo
       uses: actions/checkout@v3
 
