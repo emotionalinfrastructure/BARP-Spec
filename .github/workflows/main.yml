@@ -13,33 +13,34 @@ jobs:
       - name: 📥 Checkout Repo
         uses: actions/checkout@v3
 
-      - - name: 🧠 Install Dependencies
-  run: |
-    sudo apt update
-    sudo apt install -y pandoc zip texlive-xetex texlive-latex-extra
+      - name: 🧠 Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y pandoc zip tectonic
+
       - name: 📝 Generate PDF from README
         run: |
           ls -lah
-          pandoc README.md --from markdown --pdf-engine=pdflatex -o BARP_Specification.pdf
-          pandoc README.md --from markdown -o BARP_Specification.pdf
+          pandoc README.md --from markdown --pdf-engine=tectonic -o BARP_Specification.pdf
+          pandoc README.md --from markdown -o BARP_Specification.md
 
       - name: 📦 Bundle Repo into BARP_Protocol_Bundle.zip
         run: |
-          zip -r BARP_Protocol_Bundle.zip . -x ".git/*" -x "*.zip" -x "*.pdf"
+          zip -r BARP_Protocol_Bundle.zip . -x "*.git*" "*.zip*" "*.pdf*"
 
-      - name: 🧾 Hash Commit + Attribution Log
+      - name: 🧬 Hash Commit + Attribution Log
         run: |
           HASH=$(git log -1 --pretty=format:"%H")
           DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          echo "[$DATE] Commit Hash: $HASH | Author: Brittany Wright | BARP Protocol Update" > output-attribution.txt
+          echo "[${DATE}] Commit Hash: $HASH | Author: Brittany Wright" > output-attribution.txt
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add output-attribution.txt
-          git commit -m "🔐 Update Attribution Log"
+          git commit -m "🧬 Update Attribution Log"
           git push
 
       - name: 🚀 Publish Release (optional)
-        if: false  # Set to true if you want automatic GitHub Releases
+        if: false
         uses: softprops/action-gh-release@v1
         with:
           files: |
