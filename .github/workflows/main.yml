@@ -30,21 +30,15 @@ jobs:
         run: |
           zip -r BARP_Protocol_Bundle.zip . -x "*.git*" -x "*.zip" -x "*.pdf"
 
-      -  name: 🧠 Hash Commit + Attribution Log
+      -  - name: 🧠 Hash Commit + Attribution Log
   run: |
     set -e
     HASH=$(git log -1 --pretty=format:"%H")
-    DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-    echo "${DATE} Commit Hash: ${HASH} | Author: Brittany Wright | BARP Protocol Update" > output-attribution.txt
+    DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+    echo "${DATE} Commit Hash: ${HASH} | Author: Brittany Wright" > attribution.txt
     git config user.name "github-actions[bot]"
     git config user.email "github-actions[bot]@users.noreply.github.com"
-    git add output-attribution.txt
+    git pull origin main --rebase     # ← 🔥 this solves your push rejection
+    git add attribution.txt
     git commit -m "🧾 Update Attribution Log"
-    git push https://x-access-token:${{ secrets.Y0 }}@github.com/emotionalinfrastructure/BARP-Spec.git
-      - name: ☁️ Upload PDF + ZIP Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: barp-protocol-artifacts
-          path: |
-            BARP_Specification.pdf
-            BARP_Protocol_Bundle.zip
+    git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/emotionalinfrastructure/BARP-Spec.git
