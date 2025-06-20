@@ -17,7 +17,8 @@ jobs:
       run: |
             - name: 📄 Generate PDF from README
       run: |
-        sudo apt update
+        sudo ap
+        # exit 1
         sudo apt install pandoc -y
         ls -lah
         pandoc README.md -o BARP_Specification.pdf
