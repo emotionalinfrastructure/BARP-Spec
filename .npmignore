@@ -1,0 +1,36 @@
+# Source files
+src/
+tests/
+examples/
+docs/
+
+# Build outputs
+*.tsbuildinfo
+coverage/
+
+# Configuration / tooling
+.github/
+.vscode/
+.idea/
+*.config.js
+*.config.ts
+tsconfig.json
+jest.config.js
+.eslintrc.*
+.prettierrc*
+DEPLOYMENT.md
+CONTRIBUTING.md
+SECURITY.md
+MAINTAINERS.md
+
+# Development-only files
+*.test.ts
+*.spec.ts
+coverage/
+.nyc_output/
+node_modules/
+
+# Git
+.git/
+.gitignore
+.gitattributes

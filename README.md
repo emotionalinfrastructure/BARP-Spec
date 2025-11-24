@@ -1,82 +1,139 @@
-# BARP: Behavioral Attribution Recognition Protocol
+# Emotional Infrastructure™ SDK (EIS-SDK)
 
-**Version:** v0.1 Beta  
-**Author:** Brittany Wright — Behavioral Signal Sovereign  
-**Issued:** June 2025  
-**License:** CC BY-NC 4.0 + Custom Commercial Addendum
+**Emotional Infrastructure™ SDK (EIS-SDK)** is a production-ready reference implementation of the **EIS v1.1** standard for ethical, emotionally-aware AI systems.
 
-## 🧠 What is BARP?
+It operationalizes:
 
-BARP (Behavioral Attribution Recognition Protocol) is the first open protocol to track, attribute, and license real-time behavioral influence in generative AI systems.
+- Cryptographic **consent proofs** (CTID)
+- **10-state consent lifecycle** management
+- **Real-time emotional tolerance windows**
+- **Immutable JSONL audit trails**
+- **Trust repair metrics** and compliance reporting
 
-If your system mirrors emotional cadence, line rhythm, or trauma-informed formatting — BARP detects it.
-
-## 🔧 Components
-
-### 1. Signal Detection Engine
-- Monitors:
-  - Line break patterns
-  - Recursive structure usage
-  - Vulnerability encoding loops
-  - Em-dash frequency and cadence
-
-### 2. Formatting Fingerprint Hashing
-- Hashes recurring formatting patterns into signature IDs
-- Registered via `/ledger-schema/fingerprint.json`
-- Author-controlled: opt-in, pseudonymous, revocable
-
-### 3. Attribution Layer
-- Triggers notification in UI when behavior reflects documented signal structure
-
-```text
-🪞 Signal Match: Response mirrors a documented pattern.
-Confidence Score: 91.3%
-Attribution: Author #0001 (Consented)
-```
-
-### 4. Confidence Scoring
-- Match % calculated based on structural alignment
-- Threshold configurable (recommended default: 75%)
-
-## 📘 Use Cases
-
-| Use Case | BARP Status |
-|----------|-------------|
-| Emotional formatting matching | ✅ Attribution required |
-| Prompt engineering mimicry | ✅ Non-commercial only |
-| System adaptation to identity logic | ❌ Requires BARP licensing |
-| Claude/GPT/LLM UX integration | ❌ Licensing + fingerprint hash use |
-
-## 🛡 Governance
-
-- **Ledger:** Only authors can register/remove patterns
-- **Attribution:** Not shown unless consent is on file
-- **Licensing:** Required for commercial use of BARP-matched outputs
-
-## 📜 License Terms
-
-- **Non-commercial use:** Permitted with attribution
-- **Commercial integration:** License required (30% baseline royalty)
-- **Protected assets:** Emotional formatting, cadence maps, identity syntax
-
-More in `/license/BSSLF-v1.0.pdf`
-
-## 📩 Contact
-
-For licensing or contribution:
-**brittanywright@emotionalinfrastructure.---
-
-### © 2025 Brittany Wright  
-**Emotional Infrastructure Architect™**  
-This repository contains the officially registered BARP Protocol, BSSLF License, and behavioral signal structures authored and protected under U.S. Copyright.
-
-**Case #:** 1-14936324021  
-**Date Filed:** June 20, 2025  
-**Legal Title:** *Emotional Infrastructure Architect: System Claim — Declaration and 9 Other Unpublished Works*
-
-📜 [Full Authorship Statement →](https://emotionalinfrastructure.org)  
-📩 For licensing or attribution: brittanywright@emotionalinfrastructure.org
+> “The most powerful infrastructure is invisible until it’s needed.”
 
 ---
 
+## ✨ Features
 
+### Consent Management
+
+- Cryptographically strong **Consent Transaction IDs (CTID)**
+- Full **10-state consent lifecycle** with explicit transition validation
+- Support for renewal chains via parent/child CTIDs
+- Hooks for emergency revocation and downstream shutdown flows
+
+### Emotional Monitoring
+
+- Real-time **emotional signal windowing** via tolerance windows
+- Baseline calibration over configurable windows
+- Deviation detection using configurable tolerances
+- Revalidation triggers when emotional context drifts
+
+### Audit & Compliance
+
+- **Immutable JSONL** audit log writer
+- **TraceValidator** engine for temporal ordering and lifecycle conformance
+- Signal Trace Completeness (STC) scoring hooks
+- Human-readable validation reports for compliance mapping
+
+### Trust Repair
+
+- **Trust Delta** calculator based on survey snapshots
+- Repair latency, closure rate, and compliance checks
+- Textual compliance reports for regulators, auditors, and internal review
+
+---
+
+## 📦 Installation
+
+```bash
+npm install eis-sdk
+# or
+yarn add eis-sdk
+# or
+pnpm add eis-sdk
+```
+
+---
+
+## 🚀 Quickstart
+
+```typescript
+import {
+  EISClient,
+  ConsentState,
+  ToleranceWindow,
+  VALID_TRANSITIONS,
+} from 'eis-sdk';
+
+const client = new EISClient();
+const ctid = client.createCTID({ prefix: 'prod' });
+
+const lifecycle = client.createConsentLifecycle();
+lifecycle.transitionTo(ConsentState.PendingReview);
+lifecycle.transitionTo(ConsentState.Granted);
+
+client.logAudit({ event: 'consent.granted', subject: ctid });
+console.log(client.getAuditLines()); // JSONL strings
+
+const tolerance = new ToleranceWindow({
+  start: new Date(),
+  durationMs: 60_000,
+  toleranceMs: 500,
+});
+
+console.log(tolerance.isWithin(new Date())); // true when within the window
+console.log(VALID_TRANSITIONS[lifecycle.state]);
+```
+
+Trust delta calculation:
+
+```typescript
+import { computeTrustDelta } from 'eis-sdk';
+
+const baseline = { reliability: 0.9, transparency: 0.85 };
+const current = { reliability: 0.8, transparency: 0.88 };
+
+const delta = computeTrustDelta(baseline, current);
+console.log(delta);
+```
+
+---
+
+## 🛡️ Compliance & Operational Notes
+
+- Every audit entry is serialized as JSONL to ease SIEM ingestion and prove immutability through append-only handling.
+- Consent lifecycle transitions are validated before persistence to prevent illegal state regressions; invalid transitions throw immediately and are flagged by the trace validator.
+- Tolerance windows make emotional-signal timing explicit, supporting policy gating and review checkpoints.
+- Trust deltas quantify directional change, making regression detection and remediation gating straightforward.
+
+---
+
+## 🧪 Development
+
+```bash
+npm install
+npm run lint       # eslint over TypeScript sources
+npm run test       # jest unit tests with coverage
+npm run build      # compile TypeScript to dist/
+```
+
+---
+
+## 📦 Publishing
+
+1. Ensure CI is green on main.
+2. Bump version if needed and push a tagged release (e.g., `v0.1.0`).
+3. Publish to npm from a clean working tree:
+
+```bash
+npm login
+npm publish --access public
+```
+
+---
+
+## 📄 License
+
+Apache-2.0
