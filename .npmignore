@@ -1,0 +1,8 @@
+src/
+tests/
+*.tsbuildinfo
+coverage/
+.github/
+.eslintrc.js
+.prettierrc
+jest.config.js

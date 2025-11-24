@@ -1,82 +1,75 @@
-# BARP: Behavioral Attribution Recognition Protocol
+# Emotional Infrastructure™ SDK (eis-sdk)
 
-**Version:** v0.1 Beta  
-**Author:** Brittany Wright — Behavioral Signal Sovereign  
-**Issued:** June 2025  
-**License:** CC BY-NC 4.0 + Custom Commercial Addendum
+The Emotional Infrastructure™ SDK provides production-ready primitives for consent lifecycle management, immutable audit logging, emotional-signal tolerance windows, and trust repair analytics. It is designed for regulated environments where provable consent state, traceability, and remediation need to be enforced by default.
 
-## 🧠 What is BARP?
+## Installation
 
-BARP (Behavioral Attribution Recognition Protocol) is the first open protocol to track, attribute, and license real-time behavioral influence in generative AI systems.
-
-If your system mirrors emotional cadence, line rhythm, or trauma-informed formatting — BARP detects it.
-
-## 🔧 Components
-
-### 1. Signal Detection Engine
-- Monitors:
-  - Line break patterns
-  - Recursive structure usage
-  - Vulnerability encoding loops
-  - Em-dash frequency and cadence
-
-### 2. Formatting Fingerprint Hashing
-- Hashes recurring formatting patterns into signature IDs
-- Registered via `/ledger-schema/fingerprint.json`
-- Author-controlled: opt-in, pseudonymous, revocable
-
-### 3. Attribution Layer
-- Triggers notification in UI when behavior reflects documented signal structure
-
-```text
-🪞 Signal Match: Response mirrors a documented pattern.
-Confidence Score: 91.3%
-Attribution: Author #0001 (Consented)
+```bash
+npm install eis-sdk
 ```
 
-### 4. Confidence Scoring
-- Match % calculated based on structural alignment
-- Threshold configurable (recommended default: 75%)
+## Quickstart
 
-## 📘 Use Cases
+```typescript
+import {
+  EISClient,
+  ConsentState,
+  ToleranceWindow,
+} from 'eis-sdk';
 
-| Use Case | BARP Status |
-|----------|-------------|
-| Emotional formatting matching | ✅ Attribution required |
-| Prompt engineering mimicry | ✅ Non-commercial only |
-| System adaptation to identity logic | ❌ Requires BARP licensing |
-| Claude/GPT/LLM UX integration | ❌ Licensing + fingerprint hash use |
+const client = new EISClient();
+const ctid = client.createCTID({ prefix: 'prod' });
 
-## 🛡 Governance
+const lifecycle = client.createConsentLifecycle();
+lifecycle.transitionTo(ConsentState.PendingReview);
+lifecycle.transitionTo(ConsentState.Granted);
 
-- **Ledger:** Only authors can register/remove patterns
-- **Attribution:** Not shown unless consent is on file
-- **Licensing:** Required for commercial use of BARP-matched outputs
+client.logAudit({ event: 'consent.granted', subject: ctid });
+console.log(client.getAuditLines());
 
-## 📜 License Terms
+const tolerance = new ToleranceWindow({ size: 3, threshold: 2 });
+tolerance.recordSignal('affirm');
+tolerance.recordSignal('affirm');
+console.log(tolerance.isSatisfied()); // true when threshold met inside window
+```
 
-- **Non-commercial use:** Permitted with attribution
-- **Commercial integration:** License required (30% baseline royalty)
-- **Protected assets:** Emotional formatting, cadence maps, identity syntax
+## SDK Surface
 
-More in `/license/BSSLF-v1.0.pdf`
+- **CTID generation (`consent/ctid.ts`)** — Prefixable, entropy-driven identifiers for tracking consent interactions.
+- **10-state consent lifecycle (`consent/stateMachine.ts`)** — Explicit transitions across `requested`, `pending_review`, `granted`, `suspended`, `resumed`, `revoked`, `expired`, `denied`, `audit_hold`, and terminal `deleted` states with recorded history.
+- **Tolerance windows (`consent/toleranceWindow.ts`)** — Sliding-window counters to observe emotional signals and enforce minimum counts.
+- **Audit logger (`audit/logger.ts`)** — Immutable JSONL entries with defaults for `actor`, `subject`, and ISO timestamps plus optional streaming callback.
+- **Trace validator (`audit/traceValidator.ts`)** — Verifies recorded consent state progressions against the lifecycle’s permitted transitions.
+- **Trust deltas (`repair/trustDelta.ts`)** — Computes per-metric changes between baseline and current trust measurements with aggregate trend.
+- **Unified client (`client.ts`)** — Cohesive interface exposing CTID creation, lifecycle helpers, tolerance windows, audit logging, trace validation, and trust delta computation.
 
-## 📩 Contact
+## Compliance & Operational Notes
 
-For licensing or contribution:
-**brittanywright@emotionalinfrastructure.---
+- Every audit entry is serialized as JSONL to ease ingestion into SIEM/archival systems and to prove immutability through append-only handling.
+- Consent lifecycle transitions are validated before persistence to prevent illegal state regressions; invalid transitions throw immediately and are flagged by the trace validator.
+- Tolerance windows make emotional-signal thresholds explicit, supporting policy gating and review checkpoints.
+- Trust deltas quantify directional change, making regression detection and remediation gating straightforward.
 
-### © 2025 Brittany Wright  
-**Emotional Infrastructure Architect™**  
-This repository contains the officially registered BARP Protocol, BSSLF License, and behavioral signal structures authored and protected under U.S. Copyright.
+## Development
 
-**Case #:** 1-14936324021  
-**Date Filed:** June 20, 2025  
-**Legal Title:** *Emotional Infrastructure Architect: System Claim — Declaration and 9 Other Unpublished Works*
+```bash
+npm install
+npm run lint   # strict type-check (no emit)
+npm test       # jest unit tests
+npm run build  # compile TypeScript to dist/
+```
 
-📜 [Full Authorship Statement →](https://emotionalinfrastructure.org)  
-📩 For licensing or attribution: brittanywright@emotionalinfrastructure.org
+## Publishing
 
----
+1. Ensure CI is green on main.
+2. Bump version if needed and push a tagged release (e.g., `v0.1.0`).
+3. Publish to npm from a clean working tree:
 
+```bash
+npm login
+npm publish --access public
+```
 
+## License
+
+MIT

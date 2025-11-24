@@ -1,0 +1,42 @@
+{
+  "name": "eis-sdk",
+  "version": "0.1.0",
+  "description": "Emotional Infrastructure™ SDK for consent, audit and trust repair.",
+  "keywords": [
+    "emotional",
+    "infrastructure",
+    "consent",
+    "audit",
+    "trust",
+    "sdk"
+  ],
+  "author": "Emotional Infrastructure™",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "test": "jest",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/eis-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/eis-sdk/issues"
+  },
+  "homepage": "https://github.com/your-org/eis-sdk#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  }
+}
