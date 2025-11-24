@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { validateConsentTrace } from '../src/audit/traceValidator';
 import { ConsentState } from '../src/consent/stateMachine';
 
@@ -5,8 +6,10 @@ describe('validateConsentTrace', () => {
   it('accepts valid transition chain', () => {
     const result = validateConsentTrace([
       ConsentState.Requested,
+      ConsentState.PendingReview,
       ConsentState.Granted,
-      ConsentState.Expired,
+      ConsentState.Suspended,
+      ConsentState.Resumed,
     ]);
     expect(result.valid).toBe(true);
     expect(result.issues).toHaveLength(0);

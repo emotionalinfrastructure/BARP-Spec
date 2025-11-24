@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { AuditLogger } from '../src/audit/logger';
 
 describe('AuditLogger', () => {

@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { ConsentLifecycle, ConsentState } from '../src/consent/stateMachine';
 
 describe('ConsentLifecycle', () => {
@@ -8,15 +9,16 @@ describe('ConsentLifecycle', () => {
 
   it('records valid transitions', () => {
     const lifecycle = new ConsentLifecycle();
-    const record = lifecycle.transitionTo(ConsentState.Granted);
-    expect(record.from).toBe(ConsentState.Requested);
-    expect(record.to).toBe(ConsentState.Granted);
+    const toPending = lifecycle.transitionTo(ConsentState.PendingReview);
+    const toGranted = lifecycle.transitionTo(ConsentState.Granted);
+    expect(toPending.from).toBe(ConsentState.Requested);
+    expect(toGranted.from).toBe(ConsentState.PendingReview);
     expect(lifecycle.state).toBe(ConsentState.Granted);
-    expect(lifecycle.transitions).toHaveLength(1);
+    expect(lifecycle.transitions).toHaveLength(2);
   });
 
   it('rejects invalid transitions', () => {
-    const lifecycle = new ConsentLifecycle(ConsentState.Revoked);
-    expect(() => lifecycle.transitionTo(ConsentState.Granted)).toThrow('Invalid transition');
+    const lifecycle = new ConsentLifecycle(ConsentState.Granted);
+    expect(() => lifecycle.transitionTo(ConsentState.Requested)).toThrow('Invalid transition');
   });
 });

@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { generateCTID } from '../src/consent/ctid';
 
 describe('generateCTID', () => {

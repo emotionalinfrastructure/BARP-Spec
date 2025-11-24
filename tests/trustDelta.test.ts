@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { computeTrustDelta } from '../src/repair/trustDelta';
 
 describe('computeTrustDelta', () => {

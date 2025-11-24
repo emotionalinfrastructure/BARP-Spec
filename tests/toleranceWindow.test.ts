@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { ToleranceWindow } from '../src/consent/toleranceWindow';
 
 describe('ToleranceWindow', () => {

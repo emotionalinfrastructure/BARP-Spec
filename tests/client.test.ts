@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { EISClient } from '../src/client';
 import { ConsentState } from '../src/consent/stateMachine';
 
