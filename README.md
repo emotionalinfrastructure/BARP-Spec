@@ -14,6 +14,15 @@ It operationalizes:
 
 ---
 
+### BARP / BSSLF / Sovereign Protocol Artifacts
+All formal standards, protocol bundles, BARP specifications, and IP documents are maintained in a separate repository:
+
+➜ https://github.com/emotionalinfrastructure/BARP-Spec
+
+The EIS-SDK is the reference implementation of the Emotional Infrastructure™ standard, while BARP-Spec contains the specifications and legal/IP materials.
+
+---
+
 ## ✨ Features
 
 ### Consent Management

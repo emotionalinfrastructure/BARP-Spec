@@ -1,4 +1,4 @@
-# Dependencies
+# Node dependencies
 node_modules/
 package-lock.json
 yarn.lock
@@ -9,7 +9,7 @@ dist/
 build/
 *.tsbuildinfo
 
-# Testing
+# Tests & coverage
 coverage/
 .nyc_output/
 *.lcov
@@ -22,27 +22,33 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 eis-log.jsonl
-eis-audit.jsonl
+eis-audit*.jsonl
 
-# Environment
+# Environment files
 .env
 .env.local
 .env.*.local
 *.key
 *.secret
 
-# IDE / OS
-.idea/
+# IDE / editor settings
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
 .DS_Store
 
-# Temporary
+# Temporary files
 tmp/
 temp/
 *.tmp
 
-# Git
-.git/
+# Non-SDK artifacts
+BARP_Protocol_Bundle.zip
+BSSLF_v1.0.pdf
+BrittanyWright_IP_Badge_2025.pdf
+fingerprint.json
+output-attribution.txt
+*.pdf
+*.zip
